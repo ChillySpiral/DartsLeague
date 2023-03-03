@@ -12,6 +12,7 @@ function createEventData(name: string, legs: number,){
   return {name, legs}
 }
 
+//Add Event Results here
 const gameResults = [
   [createEventData("Niki", 6), createEventData("Rubik", 6), createEventData("Christian", 4), createEventData("Max", 2), createEventData("Matthias", 0), createEventData("Shoti", -6), createEventData("Manuel", -6), createEventData("Lukas", -6)],
 ]
@@ -63,10 +64,10 @@ export default function BasicTable() {
       <Table sx={{ minWidth: 200 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Spieler</TableCell>
-            <TableCell align="right">Punkte</TableCell>
-            <TableCell align="right">Leg Differenz</TableCell>
-            <TableCell align="right">Events gewonnen</TableCell>
+            <TableCell>Player</TableCell>
+            <TableCell align="right">Points</TableCell>
+            <TableCell align="right">Leg Difference</TableCell>
+            <TableCell align="right">Events won</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
