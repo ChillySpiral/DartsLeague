@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/DartsLeague/static/css/main.073c9b0a.css",
-    "main.js": "/DartsLeague/static/js/main.b3fa0129.js",
+    "main.js": "/DartsLeague/static/js/main.70b5c2b2.js",
     "static/js/787.28cb0dcd.chunk.js": "/DartsLeague/static/js/787.28cb0dcd.chunk.js",
     "index.html": "/DartsLeague/index.html",
     "main.073c9b0a.css.map": "/DartsLeague/static/css/main.073c9b0a.css.map",
-    "main.b3fa0129.js.map": "/DartsLeague/static/js/main.b3fa0129.js.map",
+    "main.70b5c2b2.js.map": "/DartsLeague/static/js/main.70b5c2b2.js.map",
     "787.28cb0dcd.chunk.js.map": "/DartsLeague/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.b3fa0129.js"
+    "static/js/main.70b5c2b2.js"
   ]
 }
