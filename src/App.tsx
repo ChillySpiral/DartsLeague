@@ -12,9 +12,9 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/results" element={<Results/>} />
-        <Route path="/Games" element={<Games/>} />
+        <Route path="DartsLeague/" element={<Home />} />
+        <Route path="DartsLeague/results" element={<Results/>} />
+        <Route path="DartsLeague/games" element={<Games/>} />
       </Routes>
     </Router>
     

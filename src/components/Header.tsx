@@ -5,15 +5,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
 
 import { useNavigate } from "react-router-dom";
 import ListItemButton from '@mui/material/ListItemButton';
@@ -65,13 +60,13 @@ export default function MenuAppBar() {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
               >
-                <ListItemButton onClick={() => redirectRoute("/")}>
+                <ListItemButton onClick={() => redirectRoute("DartsLeague/")}>
                   <ListItemText primary="Standings" />
                 </ListItemButton>
-                <ListItemButton onClick={() => redirectRoute("/Results")}>
+                <ListItemButton onClick={() => redirectRoute("DartsLeague/Results")}>
                   <ListItemText primary="Event Results" />
                 </ListItemButton>
-                <ListItemButton  onClick={() => redirectRoute("/Games")}>
+                <ListItemButton  onClick={() => redirectRoute("DartsLeague/Games")}>
                   <ListItemText primary="Game Results" />
                 </ListItemButton>
               </List>
