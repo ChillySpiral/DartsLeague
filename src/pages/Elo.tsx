@@ -54,9 +54,7 @@ function createEventData(name: string, elo: number,){
           <TableHead>
             <TableRow>
               <TableCell>Player</TableCell>
-              <TableCell align="right">Points</TableCell>
-              <TableCell align="right">Leg Difference</TableCell>
-              <TableCell align="right">Events won</TableCell>
+              <TableCell align="right">Elo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -68,9 +66,7 @@ function createEventData(name: string, elo: number,){
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.points}</TableCell>
-                <TableCell align="right">{row.legs}</TableCell>
-                <TableCell align="right">{row.events}</TableCell>
+                <TableCell align="right">{row.elo}</TableCell>
               </TableRow>
             ))}
           </TableBody>
