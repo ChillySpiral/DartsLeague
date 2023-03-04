@@ -69,6 +69,9 @@ export default function MenuAppBar() {
                 <ListItemButton  onClick={() => redirectRoute("DartsLeague/Games")}>
                   <ListItemText primary="Game Results" />
                 </ListItemButton>
+                <ListItemButton  onClick={() => redirectRoute("DartsLeague/Elo")}>
+                  <ListItemText primary="Elo Ranking" />
+                </ListItemButton>
               </List>
           </Menu>
 
