@@ -13,17 +13,48 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createResultEntries(name: string, wins: number, draws: number, losses: number, legsWon: number, legsLost: number, points: number){
-  var legs : string = legsWon + "/" + legsLost;
-  var dif : number = legsWon - legsLost;
-  return {Name: name, Wins: wins, Draws: draws, Losses: losses, Legs: legs, Dif: dif, Points: points}
-}
-//Insert Result data here
-const data_rows = [[createResultEntries("Niki", 4, 2, 1, 10, 4, 14), createResultEntries("Rubik", 4, 2, 1, 10, 4, 14), createResultEntries("Christian", 3, 3, 1, 9, 5, 12), createResultEntries("Max", 2, 4, 1, 8, 6, 10), createResultEntries("Matthias", 2, 3, 2, 7, 7, 9), createResultEntries("Shoti", 1, 2, 4, 4, 10, 5), createResultEntries("Manuel", 1, 2, 4, 4, 10, 5), createResultEntries("Lukas", 0, 4, 3, 4, 10, 4)]];
+class PlayerResult{
+  PlayerName : string;
+  Wins : number;
+  Draws : number;
+  Losses : number;
+  Legs : string;
+  Dif : number;
+  Points : number;
 
-function createData(name: string, date: string, eventNumber: number){
-  var data = data_rows[eventNumber];
-  return {name: "B02 170", date: "25.02.2023", data};
+  constructor(name: string, wins: number, draws: number, losses: number, legsWon: number, legsLost: number, points: number){
+    this.Legs = legsWon + "/" + legsLost;
+    this.Dif = legsWon - legsLost;
+    this.PlayerName = name;
+    this.Wins = wins;
+    this.Draws = draws;
+    this.Losses = losses;
+    this.Points = points;
+  }
+}
+
+class EventResults{
+  PlayerResults : PlayerResult[];
+  EventName : string;
+  EventDate : string;
+
+  constructor(name : string, date : string, data : PlayerResult[]){
+    this.EventName = name;
+    this.EventDate = date;
+    this.PlayerResults = data;
+  }
+}
+
+//Insert Result data here
+const data_rows : EventResults[] = [
+  new EventResults("B02 170", "25.02.2023",
+  [new PlayerResult("Niki", 4, 2, 1, 10, 4, 14), new PlayerResult("Rubik", 4, 2, 1, 10, 4, 14), new PlayerResult("Christian", 3, 3, 1, 9, 5, 12), new PlayerResult("Max", 2, 4, 1, 8, 6, 10), new PlayerResult("Matthias", 2, 3, 2, 7, 7, 9), new PlayerResult("Shoti", 1, 2, 4, 4, 10, 5), new PlayerResult("Manuel", 1, 2, 4, 4, 10, 5), new PlayerResult("Lukas", 0, 4, 3, 4, 10, 4)]),
+  new EventResults("B02 170", "04.03.2023",
+  [new PlayerResult("Tati", 5, 3, 1, 13, 5, 18), new PlayerResult("Matthias", 3, 5, 1, 11, 7, 14), new PlayerResult("Max", 3, 5, 1, 11, 7, 14), new PlayerResult("Rubik", 2, 7, 0, 11, 7, 13), new PlayerResult("Christian", 3, 4, 2, 10, 8, 13), new PlayerResult("Shoti", 2, 4, 3, 8, 10, 10), new PlayerResult("Manuel", 2, 4, 3, 8, 10, 10), new PlayerResult("Niki", 2, 3, 4, 7, 11, 9), new PlayerResult("Michael", 0, 7, 2, 7, 11, 7), new PlayerResult("Lukas", 0, 4, 5, 4, 14, 4)]),
+];
+
+function createData(index : number){
+  return data_rows[index];
 }
 
 
@@ -44,9 +75,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.EventName}
         </TableCell>
-        <TableCell>{row.date}</TableCell>
+        <TableCell>{row.EventDate}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -68,9 +99,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.data.map((historyRow) => (
-                    <TableRow key={historyRow.Name}>
-                      <TableCell>{historyRow.Name}</TableCell>
+                  {row.PlayerResults.map((historyRow) => (
+                    <TableRow key={historyRow.PlayerName}>
+                      <TableCell>{historyRow.PlayerName}</TableCell>
                       <TableCell>{historyRow.Wins}</TableCell>
                       <TableCell>{historyRow.Draws}</TableCell>
                       <TableCell>{historyRow.Losses}</TableCell>
@@ -91,7 +122,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
 //Data to be inserted here
 const rows = [
-  createData("Event One", "25.02.2023", 0),
+  createData(0),
+  createData(1)
 ];
 
 export default function CollapsibleTable() {
@@ -110,7 +142,7 @@ export default function CollapsibleTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.EventName} row={row} />
           ))}
         </TableBody>
       </Table>
