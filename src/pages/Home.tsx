@@ -8,47 +8,162 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-function createEventData(name: string, legs: number,){
-  return {name, legs}
+class PlayerStats{
+    Name : string;
+    Points : number;
+    LegDif : number;
+    Events : number;
+
+    constructor(name : string, points : number, legDif : number ,events : number){
+        this.Name = name;
+        this.Points = points;
+        this.Events = events;
+        this.LegDif = legDif;
+    }
+
+    addPoints(newPoints : number){
+      this.Points = this.Points + newPoints;
+    }
+
+    addLegs(newLegs : number){
+      this.LegDif = this.LegDif + newLegs;
+    }
+
+    addEvents(newEvents : number){
+      this.Events = this.Events + newEvents;
+    }
+
 }
 
+class Standings{
+  Niki = new PlayerStats("Niki", 0, 0, 0);
+  Rubik = new PlayerStats("Rubik", 0, 0, 0);
+  Christian = new PlayerStats("Christian", 0, 0, 0);
+  Max = new PlayerStats("Max", 0, 0, 0);
+  Matthias = new PlayerStats("Matthias", 0, 0, 0);
+  Shoti = new PlayerStats("Shoti", 0, 0, 0);
+  Manuel = new PlayerStats("Manuel", 0, 0, 0);
+  Lukas = new PlayerStats("Lukas", 0, 0, 0);
+  Tati = new PlayerStats("Tati", 0, 0, 0);
+  Michael = new PlayerStats("Michael", 0, 0, 0);
+
+  get resultsSorted(){
+    var result = [this.Niki, this.Rubik, this.Christian, this.Max, this.Matthias, this.Shoti, this.Manuel, this.Lukas, this.Tati, this.Michael]
+    result.sort((a,b) => (a.Points > b.Points) ? 1 : (a.Points === b.Points) ? ((a.Events > b.Events) ? 1 : (a.Events === b.Events) ? ((a.LegDif > b.LegDif) ? 1: -1) : -1 ):-1);
+    result.reverse();
+    return result;
+  }
+}
+
+class EventData{
+  Name : string;
+  Legs : number;
+
+  constructor(name : string, legs : number){
+      this.Name = name;
+      this.Legs = legs;
+  }
+}
+
+class TiedGroup{
+  TiedPlayers : string [];
+  
+  constructor(players : string[]){
+    this.TiedPlayers = players;
+  }
+}
+
+class EventResults{
+    Results : EventData [];
+    TiedGroups : TiedGroup [];
+
+    constructor(eventResults : EventData [], tiedGroups : TiedGroup[]){
+      this.Results = eventResults;
+      this.TiedGroups = tiedGroups;
+    }
+}
+
+class StandingsCalculator{
+  EventResults : EventResults [];
+  Standings = new Standings();
+
+  constructor(results : EventResults []){
+    this.EventResults = results;
+  }
+
+  calculateStandings(){
+    this.EventResults.forEach(event => {
+      this.mergePoints(this.calculateEventPoints(event))
+    });
+
+    return this.Standings.resultsSorted;
+  }
+
+  calculateEventPoints(event : EventResults){
+    var eventStandings = new Standings();
+    var currentPoints = event.Results.length;
+
+    event.Results.forEach(player =>{
+      var standingsPlayer : PlayerStats = eventStandings[player.Name];
+
+      if(currentPoints == event.Results.length){
+        standingsPlayer.Events = 1;
+      }
+
+      standingsPlayer.Points = currentPoints;
+      standingsPlayer.LegDif = player.Legs;
+      currentPoints = currentPoints -1;
+    });
+
+    event.TiedGroups.forEach(tied => {
+      var pointSum : number = 0;
+
+      tied.TiedPlayers.forEach(playerName =>{
+        var player : PlayerStats = eventStandings[playerName];
+        pointSum = pointSum + player.Points;
+      });
+
+      var finalPoints : number = pointSum / tied.TiedPlayers.length;
+
+      tied.TiedPlayers.forEach(playerName =>{
+        var player : PlayerStats = eventStandings[playerName];
+        player.Points = finalPoints;
+      });
+    });
+
+    return eventStandings;
+  }
+
+  mergePoints(eventStandings : Standings){
+    var names : string[] = ["Niki", "Rubik", "Christian", "Max", "Matthias", "Shoti", "Manuel", "Lukas", "Tati", "Michael"];
+
+    names.forEach(name => {
+      var player : PlayerStats = this.Standings[name];
+      var eventPlayer : PlayerStats = eventStandings[name];
+
+      player.addPoints(eventPlayer.Points);
+      player.addEvents(eventPlayer.Events);
+      player.addLegs(eventPlayer.LegDif);
+    });
+  }
+}
+
+
 //Add Event Results here
-const gameResults = [
-  [createEventData("Niki", 6), createEventData("Rubik", 6), createEventData("Christian", 4), createEventData("Max", 2), createEventData("Matthias", 0), createEventData("Shoti", -6), createEventData("Manuel", -6), createEventData("Lukas", -6)],
+const gameResults : EventResults[] = [
+  new EventResults(
+  [new EventData("Niki", 6), new EventData("Rubik", 6), new EventData("Christian", 4), new EventData("Max", 2), new EventData("Matthias", 0), new EventData("Shoti", -6), new EventData("Manuel", -6), new EventData("Lukas", -6)],
+  [new TiedGroup(["Niki", "Rubik"]), new TiedGroup(["Shoti", "Manuel"])]
+  ),
+  new EventResults(
+    [new EventData("Tati", 8), new EventData("Matthias", 4), new EventData("Max", 4), new EventData("Rubik", 4), new EventData("Christian", 2), new EventData("Shoti", -2), new EventData("Manuel", -2), new EventData("Niki", -4), new EventData("Michael", -4), new EventData("Lukas", -10)],
+    [new TiedGroup(["Matthias", "Max"]), new TiedGroup(["Shoti", "Manuel"])]
+  ),
 ]
 
 function countPerPlayer(){
-  var playerPoints = {
-    "Niki" : {"name": "Niki", "points": 0, "legs":0, "events":0},
-    "Rubik" : {"name": "Rubik", "points": 0, "legs":0, "events":0},
-    "Christian" : {"name": "Christian", "points": 0, "legs":0, "events":0},
-    "Max" : {"name": "Max", "points": 0, "legs":0, "events":0},
-    "Matthias" : {"name": "Matthias", "points": 0, "legs":0, "events":0},
-    "Shoti" : {"name": "Shoti", "points": 0, "legs":0, "events":0},
-    "Manuel" : {"name": "Manuel", "points": 0, "legs":0, "events":0},
-    "Lukas" : {"name": "Lukas", "points": 0, "legs":0, "events":0},
-    "Tati" : {"name": "Tati", "points": 0, "legs":0, "events":0},
-    "Michael" : {"name": "Michael", "points": 0, "legs":0, "events":0}
-  }
-
-  gameResults.forEach(element => {
-    var maxPoints = element.length
-    
-    element.forEach(player => {
-        if(maxPoints == element.length){
-          playerPoints[player.name].events = playerPoints[player.name].events + 1
-        }
-        playerPoints[player.name].points = playerPoints[player.name].points + maxPoints;
-        playerPoints[player.name].legs = playerPoints[player.name].legs + player.legs;
-        maxPoints = maxPoints -1;
-    });
-
-  });
-
-  var result = [playerPoints["Niki"], playerPoints["Rubik"], playerPoints["Christian"], playerPoints["Max"],playerPoints["Matthias"] ,playerPoints["Shoti"], playerPoints["Manuel"], playerPoints["Lukas"], playerPoints["Tati"], playerPoints["Michael"]]
-  result.sort((a,b) => (a.points > b.points) ? 1 : (a.points === b.points) ? ((a.events > b.events) ? 1 : (a.events === b.events) ? ((a.legs > b.legs) ? 1: -1) : -1 ):-1);
-  result.reverse();
-  return result;
+  var calculator = new StandingsCalculator(gameResults);
+  return calculator.calculateStandings();
 }
 
 
@@ -73,15 +188,15 @@ export default function BasicTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.Name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.Name}
               </TableCell>
-              <TableCell align="right">{row.points}</TableCell>
-              <TableCell align="right">{row.legs}</TableCell>
-              <TableCell align="right">{row.events}</TableCell>
+              <TableCell align="right">{row.Points}</TableCell>
+              <TableCell align="right">{row.LegDif}</TableCell>
+              <TableCell align="right">{row.Events}</TableCell>
             </TableRow>
           ))}
         </TableBody>
