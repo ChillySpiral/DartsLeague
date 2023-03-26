@@ -159,6 +159,10 @@ const gameResults : EventResults[] = [
     [new EventData("Tati", 8), new EventData("Matthias", 4), new EventData("Max", 4), new EventData("Rubik", 4), new EventData("Christian", 2), new EventData("Shoti", -2), new EventData("Manuel", -2), new EventData("Niki", -4), new EventData("Michael", -4), new EventData("Lukas", -10)],
     [new TiedGroup(["Matthias", "Max"]), new TiedGroup(["Shoti", "Manuel"])]
   ),
+  new EventResults(
+    [new EventData("Christian", 2), new EventData("Manuel", 2), new EventData("Matthias", 2), new EventData("Tati", 1), new EventData("Rubik", -2), new EventData("Max", -5)],
+    [new TiedGroup(["Christian", "Manuel", "Matthias"])]
+  ),
 ]
 
 function countPerPlayer(){

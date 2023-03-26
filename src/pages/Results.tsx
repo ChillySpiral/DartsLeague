@@ -51,6 +51,8 @@ const data_rows : EventResults[] = [
   [new PlayerResult("Niki", 4, 2, 1, 10, 4, 14), new PlayerResult("Rubik", 4, 2, 1, 10, 4, 14), new PlayerResult("Christian", 3, 3, 1, 9, 5, 12), new PlayerResult("Max", 2, 4, 1, 8, 6, 10), new PlayerResult("Matthias", 2, 3, 2, 7, 7, 9), new PlayerResult("Shoti", 1, 2, 4, 4, 10, 5), new PlayerResult("Manuel", 1, 2, 4, 4, 10, 5), new PlayerResult("Lukas", 0, 4, 3, 4, 10, 4)]),
   new EventResults("B02 170", "04.03.2023",
   [new PlayerResult("Tati", 5, 3, 1, 13, 5, 18), new PlayerResult("Matthias", 3, 5, 1, 11, 7, 14), new PlayerResult("Max", 3, 5, 1, 11, 7, 14), new PlayerResult("Rubik", 2, 7, 0, 11, 7, 13), new PlayerResult("Christian", 3, 4, 2, 10, 8, 13), new PlayerResult("Shoti", 2, 4, 3, 8, 10, 10), new PlayerResult("Manuel", 2, 4, 3, 8, 10, 10), new PlayerResult("Niki", 2, 3, 4, 7, 11, 9), new PlayerResult("Michael", 0, 7, 2, 7, 11, 7), new PlayerResult("Lukas", 0, 4, 5, 4, 14, 4)]),
+  new EventResults("B03 170", "25.03.2023",
+  [new PlayerResult("Christian", 3, 0, 2, 6, 4, 3), new PlayerResult("Manuel", 3, 0, 2, 6, 4, 3), new PlayerResult("Matthias", 3, 0, 2, 6, 4, 3), new PlayerResult("Tati", 3, 0, 2, 6, 5, 3), new PlayerResult("Rubik", 2, 0, 3, 5, 7, 2), new PlayerResult("Max", 1, 0, 4, 3, 8, 1)]),
 ];
 
 function createData(index : number){
@@ -123,7 +125,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 //Data to be inserted here
 const rows = [
   createData(0),
-  createData(1)
+  createData(1),
+  createData(2)
 ];
 
 export default function CollapsibleTable() {
